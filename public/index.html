@@ -7,12 +7,40 @@
     <title>Phone Changer</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
     <style>
         body {
             padding-top: 60px;
         }
     </style>
     <script>
+
+        $(document).ready(() => {
+
+$.ajax({
+    url: "https://herokuphonechangeappsid.herokuapp.com/getcontacts", 
+    method: 'GET',
+    success: function(response){
+        if(response.rows.length > 0){
+            for(let index = 0; index < response.rows.length; index++) {
+                var newRow = $("<tr>");
+                var cols = "";
+                var firstname = '';
+                var lastname = '';
+                var gender = '';
+                cols += '<td> '+ response.rows[index].firstName +'</td>';
+                cols += '<td> '+ response.rows[index].lastName +'</td>';
+                cols += '<td> '+ response.rows[index].email+'</td>';                
+                newRow.append(cols);
+                $("#dvTable .tbody").append(newRow);
+            }  
+
+        }
+    }
+})
+})
+
+
         $(function() {
             $("#phoneChangerForm").submit(function(event) {
                 event.preventDefault();
@@ -111,5 +139,9 @@
             </div>
         </form>
     </div>
+
+    <div id="dvTable"></div>
+
+
 </body>
 </html>

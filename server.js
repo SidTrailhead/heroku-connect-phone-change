@@ -41,6 +41,20 @@ app.post('/update', function(req, res) {
     });
 });
 
+
+app.get('/getcontacts', function(req, res) {
+    pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
+        // watch for any connect issues
+        if (err) console.log(err);
+        conn.query("SELECT * FROM salesforce.Contact", function (err, result) {
+        if (err) throw err;
+        else{
+            response.send(result)
+        }
+
+    });
+    });
+});
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

@@ -62,6 +62,47 @@
         });
 
     </script>
+
+
+    <script>
+
+var service = 'https://herokuphonechangeappsid.herokuapp.com/getcontacts';
+
+$(document).ready(function(){
+
+    jQuery.support.cors = true;
+
+    $.ajax(
+    {
+        type: "GET",
+        url: service,
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            
+        var trHTML = '';
+                
+        $.each(data.firstName, function (i, item) {
+            
+            trHTML += '<tr><td>' + data.firstName[i] + '</td><td>' + data.lastName[i] + '</td></tr>';
+        });
+        
+        $('#contactTable').append(trHTML);
+        
+        },
+        
+        error: function (msg) {
+            
+            alert(msg.responseText);
+        }
+    });
+})
+
+</script>
+
+
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -112,8 +153,14 @@
         </form>
     </div>
 
-    <div id="dvTable"></div>
+    <table id="contactTable" border='1'>
+    <tr>
+        <th>firstName</th>
+         <th>lastName</th>
+    </tr>
+   </table>
 
-    
+
+
 </body>
 </html>

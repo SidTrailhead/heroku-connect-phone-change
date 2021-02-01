@@ -64,42 +64,26 @@
     </script>
 
 
-    <script>
+ 
 
-var service = 'https://herokuphonechangeappsid.herokuapp.com/getcontacts';
 
-$(document).ready(function(){
+<script type="text/javascript">
+    var service = 'https://herokuphonechangeappsid.herokuapp.com/getcontacts';
 
-    jQuery.support.cors = true;
-
-    $.ajax(
-    {
-        type: "GET",
-        url: service,
-        data: "{}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        cache: false,
-        success: function (data) {
-            
-        var trHTML = '';
-                
-        $.each(data.firstName, function (i, item) {
-            
-            trHTML += '<tr><td>' + data.firstName[i] + '</td><td>' + data.lastName[i] + '</td></tr>';
-        });
-        
-        $('#contactTable').append(trHTML);
-        
-        },
-        
-        error: function (msg) {
-            
-            alert(msg.responseText);
+$.ajax({
+    url: service,
+    method: 'GET',
+    dataType: 'json',
+    success: function(data) {
+        for (var i=0; i<data.length; i++) {
+            var row = $('<tr><td>' + data[i].zipcode+ '</td><td>' + data[i].city + '</td><td>' + data[i].county + '</td></tr>');
+            $('#myTable').append(row);
         }
-    });
-})
-
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+        alert('Error: ' + textStatus + ' - ' + errorThrown);
+    }
+});
 </script>
 
 
@@ -153,14 +137,14 @@ $(document).ready(function(){
         </form>
     </div>
 
-    <table id="contactTable" border='1'>
+   
+
+<table id="myTable">
     <tr>
-        <th>firstName</th>
+         <th>firstName</th>
          <th>lastName</th>
     </tr>
-   </table>
-
-
+</table>
 
 </body>
 </html>
